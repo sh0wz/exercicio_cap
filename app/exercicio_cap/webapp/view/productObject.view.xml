@@ -1,0 +1,43 @@
+<mvc:View controllerName="exerciciocap.controller.productObject"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form">
+	<Page id="page" title="Product Detail" showNavButton="true" navButtonPress=".onNavBack" busyIndicatorDelay="0">
+		<content>
+			<Panel >
+				<headerToolbar>
+					<Toolbar>
+						<Title text="Product ID - {ProductID}" level="H2"/>
+						<ToolbarSpacer />
+					</Toolbar>
+				</headerToolbar>
+				<f:SimpleForm id="simpleform" editable="false" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="Product Name"/>
+						<Text text="{ProductName}"/>
+						<Label text="Quantity Per Unit"/>
+						<Text text="{QuantityPerUnit}"/>
+						<Label text="Unit Price"/>
+						<ObjectNumber
+						number="{ path: 'UnitPrice',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+						unit="EUR"/>
+						<Label text="Units in Stock"/>
+						<Text text="{UnitsInStock}"/>
+						<Label text="Discontinued"/>
+						<ObjectStatus id="status"
+							class="sapUiSmallMarginBottom"
+							text="{Discontinued}"
+							icon="sap-icon://information"
+							state="Information" />
+					</f:content>
+				</f:SimpleForm>
+			</Panel>
+		</content>
+	</Page>
+</mvc:View>

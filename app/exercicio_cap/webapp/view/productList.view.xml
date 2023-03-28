@@ -1,0 +1,38 @@
+<mvc:View controllerName="exerciciocap.controller.productList"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <SearchField id="srchfield" search="onSearch"></SearchField>
+            <Table id="productTable" items="{/Product}">
+                <columns>
+                    <Column id="cprdname">
+                        <Text id="tprdname" text="Product Name" />
+                    </Column>
+                    <Column id="cqntpunits">
+                        <Text id="tqntpunits" text="Units in Stock" />
+                    </Column>
+                    <Column>
+                        <Text text="Unit Price" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="columnListItem" type="Active" vAlign="Middle" press="onPress">
+                        <cells>
+                            <ObjectIdentifier id="obj" title="{ProductName}" text="{ProductID}" />
+                            <Text id="text" text="{UnitsInStock}" />
+                            <ObjectNumber number="{ path: 'UnitPrice',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}" unit="EUR"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
