@@ -1,38 +1,83 @@
-<mvc:View controllerName="exerciciocap.controller.productList"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m"
-    xmlns:l="sap.ui.layout">
-    <Page id="page" title="{i18n>title}">
-        <content>
-            <SearchField id="srchfield" search="onSearch"></SearchField>
-            <Table id="productTable" items="{/Product}">
-                <columns>
-                    <Column id="cprdname">
-                        <Text id="tprdname" text="Product Name" />
-                    </Column>
-                    <Column id="cqntpunits">
-                        <Text id="tqntpunits" text="Units in Stock" />
-                    </Column>
-                    <Column>
-                        <Text text="Unit Price" />
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem id="columnListItem" type="Active" vAlign="Middle" press="onPress">
-                        <cells>
-                            <ObjectIdentifier id="obj" title="{ProductName}" text="{ProductID}" />
-                            <Text id="text" text="{UnitsInStock}" />
-                            <ObjectNumber number="{ path: 'UnitPrice',
-							type: 'sap.ui.model.type.Float',
-							formatOptions: {
-								minFractionDigits: 2,
-								maxFractionDigits: 2
-							}
-						}" unit="EUR"/>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-        </content>
-    </Page>
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:sap.ui.fl="sap.ui.fl" controllerName="exerciciocap.controller.productList">
+    <ObjectPageLayout busyIndicatorDelay="0" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title text="Product List" wrapping="true"/>
+                </expandedHeading>
+                <snappedHeading>
+                    <m:Title text="Product List" wrapping="true"/>
+                </snappedHeading>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <headerContent>
+            <l:AlignedFlowLayout maxItemWidth="24rem" class="filterBarLayout">
+                <l:content>
+                    <l:VerticalLayout width="95%">
+                        <m:Label text="Product ID:" labelFor="fNo" />
+                        <m:Input id="fNo" class="sapUiSmallMarginBottom" type="Number" placeholder="Enter Product ID" liveChange="onlyInteger"/>
+                    </l:VerticalLayout>
+
+                    <l:VerticalLayout width="95%">
+                        <m:Label text="Name:"/>
+                        <m:Input id="fName" class="sapUiSmallMarginBottom" placeholder="Enter Product Name"/>
+                    </l:VerticalLayout>
+                </l:content>
+                <l:endContent>
+                    <l:VerticalLayout class="sapUiTinyMarginBegin sapUiSmallMarginEnd">
+                        <m:Button type="Emphasized" text="Apply Filters" press="onSearch" />
+                    </l:VerticalLayout>
+                </l:endContent>
+
+            </l:AlignedFlowLayout>
+        </headerContent>
+
+        <sections>
+            <ObjectPageSection showTitle="false">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:Table id="productTable" items="{/Product}">
+                                <m:columns>
+                                    <m:Column id="cprdname">
+                                        <m:Text id="tprdname" text="Product Name" />
+                                    </m:Column>
+                                    <m:Column id="cqntpunits">
+                                        <m:Text id="tqntpunits" text="Units in Stock" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Unit Price" />
+                                    </m:Column>
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem id="columnListItem" type="Active" vAlign="Middle" press="onPress">
+                                        <m:cells>
+                                            <m:ObjectIdentifier id="obj" title="{ProductName}" text="{ProductID}" />
+                                            <m:Text id="text" text="{UnitsInStock}" />
+                                            <m:ObjectNumber number="{ path: 'UnitPrice',
+                                                type: 'sap.ui.model.type.Float',
+                                                formatOptions: {
+                                                    minFractionDigits: 2,
+                                                    maxFractionDigits: 2
+                                                }
+                                            }" unit="EUR"/>
+                                        </m:cells>
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+        </sections>
+
+    </ObjectPageLayout>
 </mvc:View>

@@ -25,6 +25,24 @@ sap.ui.define([
 
             onSearch : function(oEvent) {
                 var sQuery = oEvent.getParameter("query");
+
+                var id = this.getView().byId("fNo");
+                var name = this.getView().byId("fName");
+
+                var globalFilter; 
+                
+                if(id.mProperties.value && name.mProperties.value){
+                    globalFilter = new Filter([ new Filter("ProductName", FilterOperator.Contains, name.mProperties.value),
+                                                new Filter("ProductID", FilterOperator.EQ, id.mProperties.value)], true);
+                }else if(id.mProperties.value){
+                    globalFilter = new Filter("ProductID", FilterOperator.EQ, id.mProperties.value);
+                }else{
+                    globalFilter = new Filter("ProductName", FilterOperator.Contains, name.mProperties.value);
+                }
+
+                    
+
+                
                 
                 //if (sQuery) {
                     //globalFilter = new Filter([
@@ -32,7 +50,7 @@ sap.ui.define([
                     //    new Filter("Category", FilterOperator.Contains, sQuery)
                     //    ], false
                     //);
-                    var globalFilter = new Filter("ProductName", FilterOperator.Contains, sQuery);
+                    //var globalFilter = new Filter("ProductName", FilterOperator.Contains, sQuery);
                     this.byId("productTable").getBinding("items").filter(globalFilter);
                    // MessageToast.show(sQuery);
                 //}  
@@ -46,6 +64,13 @@ sap.ui.define([
                 router.navTo("product",{
                     ProductID : oBindingContext.sPath.substr(1)
                 });
+            },
+
+            onlyInteger: function (oEvent) {
+                var value = oEvent.getSource().getValue().replace(/[^\d]/g, '');
+                oEvent.getSource().setValue(value);
             }
+
+
         });
     });

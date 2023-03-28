@@ -9,13 +9,25 @@ const init = async function (srv) {
 
         if(req._queryOptions.$filter){
 
-            var indexStart = req._queryOptions.$filter.indexOf(',');
-            var indexEnd = req._queryOptions.$filter.indexOf(')');
+            if(req._queryOptions.$filter.includes("contains", 0)){
 
-            var substring = 'substringof(' + req._queryOptions.$filter.substring(indexStart+1, indexEnd) +  ',ProductName) eq true';
+                var indexStart = req._queryOptions.$filter.indexOf(',');
+                var indexEnd = req._queryOptions.$filter.indexOf(')');
 
-            var filter = "/?$filter=" + substring ;
-            
+                var substring = 'substringof(' + req._queryOptions.$filter.substring(indexStart+1, indexEnd) +  ',ProductName) eq true';
+
+                var filter = "/?$filter=" + substring ;
+
+                if(req._queryOptions.$filter.includes("ProductID", 0)){
+
+                    filter += req._queryOptions.$filter.substring(indexEnd+1, req._queryOptions.$filter.length);
+
+                }
+
+            }else{
+                url += "/?$filter=" + req._queryOptions.$filter;
+            }
+
         }
         if(req.data.ProductID){
 
