@@ -12,3 +12,11 @@ entity Product {
         ReorderLevel    : Integer;
         Discontinued    : Boolean;
 }
+
+entity Category {
+    key CategoryID    : Integer;
+        CategoryName  : String;
+        Description   : String;
+        Picture       : Binary;
+        Products      : Association to many Product on Products.CategoryID = $self.CategoryID;
+}

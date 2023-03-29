@@ -84,6 +84,84 @@ const init = async function (srv) {
 
        });
 
+       srv.on("READ", "Category", async function (req) {
+
+        var url = 'https://services.odata.org/v2/northwind/northwind.svc/Categories';
+
+        if(req._queryOptions && req._queryOptions.$filter){
+
+            if(req._queryOptions.$filter.includes("contains", 0)){
+
+                var indexStart = req._queryOptions.$filter.indexOf(',');
+                var indexEnd = req._queryOptions.$filter.indexOf(')');
+
+                var substring = 'substringof(' + req._queryOptions.$filter.substring(indexStart+1, indexEnd) +  ',CategoryName) eq true';
+
+                var filter = "/?$filter=" + substring ;
+
+                if(req._queryOptions.$filter.includes("CategoryID", 0)){
+
+                    filter += req._queryOptions.$filter.substring(indexEnd+1, req._queryOptions.$filter.length);
+
+                }
+
+            }else{
+                url += "/?$filter=" + req._queryOptions.$filter;
+            }
+
+        }
+        if(req.data && req.data.CategoryID){
+
+            var id = '(' + req.data.CategoryID + ')';
+
+        }
+    
+        if(filter){
+            url += filter;
+        }else if(id){
+            url += id;
+        }
+
+        if(req._queryOptions && req._queryOptions.$expand)
+        {
+            url += '?$expand=Products';
+        }
+
+        var categories = await axios.get(url);
+
+        var categoriesList = [];
+        
+
+        if(categories.data.d.results){
+
+            categories.data.d.results.forEach(category => {
+                //categoriesList.push(category);
+                categoriesList.push({
+                    CategoryID    : category.CategoryID,
+                    CategoryName  : category.CategoryName,
+                    Description   : category.Description,
+                    Picture       : category.Picture
+                });
+            });
+
+        }else{
+
+            categoriesList.push({
+                CategoryID    : categories.data.d.CategoryID,
+                CategoryName  : categories.data.d.CategoryName,
+                Description   : categories.data.d.Description,
+                Picture       : categories.data.d.Picture,
+                Products      : categories.data.d.Products.results
+            });
+
+        }
+
+        return categoriesList;
+
+       });
+
+       
+
 }
 
 module.exports = {

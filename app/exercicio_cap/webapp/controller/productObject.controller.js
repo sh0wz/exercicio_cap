@@ -31,16 +31,27 @@ sap.ui.define([
 
                 page.setBusy(true);
 
-                this.getView().bindElement({ path: "/" + oPath , events: {
-
-                    dataReceived: function(oEvent2){
-
+                this.getView().bindElement({ path: "/" + oPath,
+                  parameters: { expand: "Products" },
+                  events: { dataReceived: function(oEvent2){
                         page.setBusy(false);
-
                     }}
-
                 });
 
+            },
+
+            statusStock: function (unitsStock) {
+                
+                if (unitsStock > 50) {
+                    return "Success";
+                } else if (unitsStock <= 0 ){
+                    return "Error";
+                }else{
+                    return "Warning";
+                }
             }
+
+            
+            
         });
     });

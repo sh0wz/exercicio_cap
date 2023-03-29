@@ -10,24 +10,24 @@
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
-                    <m:Title text="Product List" wrapping="true"/>
+                    <m:Title text="Category List" wrapping="true"/>
                 </expandedHeading>
                 <snappedHeading>
-                    <m:Title text="Product List" wrapping="true"/>
+                    <m:Title text="Category List" wrapping="true"/>
                 </snappedHeading>
             </ObjectPageDynamicHeaderTitle>
         </headerTitle>
         <headerContent>
             <l:AlignedFlowLayout maxItemWidth="24rem" class="filterBarLayout">
                 <l:content>
-                    <l:VerticalLayout width="95%">
-                        <m:Label text="Product ID:" labelFor="fNo" />
-                        <m:Input id="fNo" class="sapUiSmallMarginBottom" type="Number" placeholder="Enter Product ID" liveChange="onlyInteger"/>
+                    <l:VerticalLayout width="90%">
+                        <m:Label text="Category ID:" labelFor="fNo" />
+                        <m:Input id="fNo" class="sapUiSmallMarginBottom" type="Number" placeholder="Enter Category ID" liveChange="onlyInteger"/>
                     </l:VerticalLayout>
 
-                    <l:VerticalLayout width="95%">
+                    <l:VerticalLayout width="90%">
                         <m:Label text="Name:"/>
-                        <m:Input id="fName" class="sapUiSmallMarginBottom" placeholder="Enter Product Name"/>
+                        <m:Input id="fName" class="sapUiSmallMarginBottom" placeholder="Enter Category Name"/>
                     </l:VerticalLayout>
                 </l:content>
                 <l:endContent>
@@ -35,39 +35,29 @@
                         <m:Button type="Emphasized" text="Apply Filters" press="onSearch" />
                     </l:VerticalLayout>
                 </l:endContent>
-
             </l:AlignedFlowLayout>
         </headerContent>
-
         <sections>
             <ObjectPageSection showTitle="false">
                 <subSections>
                     <ObjectPageSubSection>
                         <blocks>
-                            <m:Table id="productTable" items="{/Product}">
+                            <m:Table id="productTable" items="{/Category}">
                                 <m:columns>
-                                    <m:Column id="cprdname">
-                                        <m:Text id="tprdname" text="Product Name" />
-                                    </m:Column>
-                                    <m:Column id="cqntpunits">
-                                        <m:Text id="tqntpunits" text="Units in Stock" />
+                                    <m:Column>
+                                        <m:Text text="Category Name" />
                                     </m:Column>
                                     <m:Column>
-                                        <m:Text text="Unit Price" />
+                                        <m:Text text="Category Description" />
                                     </m:Column>
+                                    <!--<m:Column> <m:Text text="Picture" /> </m:Column>-->
                                 </m:columns>
                                 <m:items>
-                                    <m:ColumnListItem id="columnListItem" type="Active" vAlign="Middle" press="onPress">
+                                    <m:ColumnListItem type="Active" vAlign="Middle" press="onPress">
                                         <m:cells>
-                                            <m:ObjectIdentifier id="obj" title="{ProductName}" text="{ProductID}" />
-                                            <m:Text id="text" text="{UnitsInStock}" />
-                                            <m:ObjectNumber number="{ path: 'UnitPrice',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                    minFractionDigits: 2,
-                                                    maxFractionDigits: 2
-                                                }
-                                            }" unit="EUR"/>
+                                            <m:ObjectIdentifier title="{CategoryName}" text="{CategoryID}" />
+                                            <m:Text text="{Description}" />
+                                            <!--<m:Text text="{Picture}" />-->
                                         </m:cells>
                                     </m:ColumnListItem>
                                 </m:items>
@@ -76,8 +66,6 @@
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-
         </sections>
-
     </ObjectPageLayout>
 </mvc:View>

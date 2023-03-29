@@ -1,43 +1,94 @@
-<mvc:View controllerName="exerciciocap.controller.productObject"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-	xmlns="sap.m"
-	xmlns:f="sap.ui.layout.form">
-	<Page id="page" title="Product Detail" showNavButton="true" navButtonPress=".onNavBack" busyIndicatorDelay="0">
-		<content>
-			<Panel >
-				<headerToolbar>
-					<Toolbar>
-						<Title text="Product ID - {ProductID}" level="H2"/>
-						<ToolbarSpacer />
-					</Toolbar>
-				</headerToolbar>
-				<f:SimpleForm id="simpleform" editable="false" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1">
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.uxap"
+	xmlns:m="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:t="sap.ui.table"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:avatar="sap.f" controllerName="exerciciocap.controller.productObject">
+	<!--<ObjectPageLayout showFooter="{global>/editEnabled}" subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true" upperCaseAnchorBar="false">-->
+	<ObjectPageLayout id="page" subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true" upperCaseAnchorBar="false" busyIndicatorDelay="0">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<expandedHeading>
+					<m:HBox alignItems="End">
+						<m:Button type="Transparent" icon="sap-icon://nav-back" press="onNavBack"/>
+						<m:Title text="Category Detail" class="sapUiTinyMarginEnd" wrapping="true"/>
+					</m:HBox>
+				</expandedHeading>
+				<snappedHeading>
+					<m:HBox alignItems="End">
+						<m:Button type="Transparent" icon="sap-icon://nav-back" press="onNavBack"/>
+						<m:Title text="Category Detail" class="sapUiTinyMarginEnd" wrapping="true"/>
+					</m:HBox>
+				</snappedHeading>
+				<!--<actions>
+					<m:Button text="{i18n>edit}" visible="{= ${global>/editEnabled} === false }" press="onPressEdit" type="Emphasized"/>
+				</actions>-->
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<headerContent>
+			<m:FlexBox wrap="Wrap" fitContainer="true">
+				<f:SimpleForm>
 					<f:content>
-						<Label text="Product Name"/>
-						<Text text="{ProductName}"/>
-						<Label text="Quantity Per Unit"/>
-						<Text text="{QuantityPerUnit}"/>
-						<Label text="Unit Price"/>
-						<ObjectNumber
-						number="{ path: 'UnitPrice',
-							type: 'sap.ui.model.type.Float',
-							formatOptions: {
-								minFractionDigits: 2,
-								maxFractionDigits: 2
-							}
-						}"
-						unit="EUR"/>
-						<Label text="Units in Stock"/>
-						<Text text="{UnitsInStock}"/>
-						<Label text="Discontinued"/>
-						<ObjectStatus id="status"
-							class="sapUiSmallMarginBottom"
-							text="{Discontinued}"
-							icon="sap-icon://information"
-							state="Information" />
+						<m:Label text="Category ID"/>
+						<m:Text text="{CategoryID}"/>
+						<m:Label text="Category Name"/>
+						<m:Text text="{CategoryName}"/>
+						<m:Label text="Description"/>
+						<m:Text text="{Description}"/>
+						<m:Label text="Picture"/>
+						<m:Image src="data:image/png;base64,+{Picture}"/>
 					</f:content>
 				</f:SimpleForm>
-			</Panel>
-		</content>
-	</Page>
+			</m:FlexBox>
+		</headerContent>
+		<sections>
+			<ObjectPageSection titleUppercase="false" title="Products">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:VBox>
+								<m:Table items="{Products}">
+									<m:columns>
+										<m:Column> <m:Text text="Product ID"/> </m:Column>
+										<m:Column> <m:Text text="Product Name"/> </m:Column>
+										<m:Column> <m:Text text="Quantity Per Unit"/> </m:Column>
+										<m:Column> <m:Text text="Unit Price"/> </m:Column>
+										<m:Column> <m:Text text="Units In Stock"/> </m:Column>
+										<m:Column> <m:Text text="Discontinued"/> </m:Column>
+									</m:columns>
+									<m:items>
+										<m:ColumnListItem>
+											<m:cells>
+												<m:Text text="{ProductID}"/>
+												<m:Text text="{ProductName}"/>
+												<m:Text text="{QuantityPerUnit}"/>
+												<m:ObjectNumber number="{ path: 'UnitPrice', type: 'sap.ui.model.type.Float',
+																			formatOptions: {
+																				minFractionDigits: 2,
+																				maxFractionDigits: 2
+																			} }" unit="EUR"/>
+												<!--<m:Text text="{UnitsInStock}"/ state="{= ${UnitsInStock} > 50 ? 'Success' : 'Error' }">-->
+												<m:ObjectNumber number="{ path: 'UnitsInStock', type: 'sap.ui.model.type.Integer' }"
+																state="{ path: 'UnitsInStock', formatter: '.statusStock'}"/>
+												<m:ObjectStatus text="{Discontinued}" state="Information" />
+											</m:cells>
+										</m:ColumnListItem>
+									</m:items>
+								</m:Table>
+							</m:VBox>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+		<footer>
+			<!--<m:OverflowToolbar>
+				<m:ToolbarSpacer/>
+				<m:Button text="{i18n>save}" type="Emphasized" press="onPressSave"/>
+				<m:Button text="{i18n>cancel}" type="Transparent" press="onPressCancel"/>
+			</m:OverflowToolbar>-->
+		</footer>
+	</ObjectPageLayout>
 </mvc:View>
