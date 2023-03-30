@@ -49,6 +49,14 @@ sap.ui.define([
                 }else{
                     return "Warning";
                 }
+            },
+
+            pictureFormatter: function (pictureBin) {
+                
+                if(pictureBin){
+                    var sSub = pictureBin.substr(104);
+                    return 'data:image/bmp;base64,' + sSub;
+                }
             }
 
             
