@@ -38,7 +38,8 @@
 						<m:Label text="Description"/>
 						<m:Text text="{Description}"/>
 						<m:Label text="Picture"/>
-						<m:Image src="{ path: 'Picture', formatter: '.pictureFormatter'}" />
+						<m:Image src="{Picture}"/>
+						<!--<m:Image src="{ path: 'Picture', formatter: '.pictureFormatter'}" />-->
 						<!--<m:IllustratedMessage
 							description="Image was not found"
 							title="Not Found"
