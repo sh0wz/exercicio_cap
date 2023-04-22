@@ -6,7 +6,7 @@ const init = async function (srv) {
     srv.on("READ", "Product", async function (req) {
 
         var url = 'https://services.odata.org/v2/northwind/northwind.svc/Products';
-
+        //comment to the main branch test
         if(req._queryOptions.$filter){
 
             if(req._queryOptions.$filter.includes("contains", 0)){
